@@ -1,5 +1,7 @@
 import { isArray, isFunction } from './typed'
 
+type Falsy = null | undefined | false | 0 | ''
+
 /**
  * Sorts an array of items into groups. The return value is a map where the keys are
  * the group ids the given getGroupId function produced and the value is an array of
@@ -472,7 +474,7 @@ export const toggle = <T>(
  * only truthy values
  */
 export const sift = <T>(list: readonly T[]): NonNullable<T>[] => {
-  return (list?.filter(x => !!x) as NonNullable<T>[]) ?? []
+  return list.filter(Boolean) as Exclude<NonNullable<T>, Falsy>[]
 }
 
 /**
